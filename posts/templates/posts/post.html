@@ -1,17 +1,20 @@
 {% extends 'base.html' %} {% block title %} Home {% endblock %} {% block hi %}
-<h1>{{ post.title }}</h1>
-<hr />
-<section>
-  <div>
-    <section>
-      <img
-        src="{{ post.banner.url }}"
-        class="img-fluid"
-        alt="{{ post.title }}"
-      />
-      <p>{{ post.date }}</p>
-      <p>{{ post.body }}</p>
-    </section>
-  </div>
-</section>
+<div class="mb-4">
+  <h1>{{ post.title }}</h1>
+  <hr />
+  <section>
+    <div>
+      <section>
+        <img
+          src="{{ post.banner.url }}"
+          class="img-fluid"
+          alt="{{ post.title }}"
+        />
+        <p>{{ post.date }}</p>
+        <p>{{ post.body }}</p>
+        <span>by {{ post.author }}</span>
+      </section>
+    </div>
+  </section>
+</div>
 {% endblock %}

@@ -1,0 +1,17 @@
+input, textarea{
+    width: 100%;
+    padding: 0.25rem;
+}
+
+.errorlist > li {
+    color: rgb(255, 0, 0);
+}
+
+.truncate-multiline {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* Change this to 2 or 3 for the number of lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
