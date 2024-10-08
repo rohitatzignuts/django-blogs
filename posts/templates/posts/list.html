@@ -1,27 +1,81 @@
-{% extends 'base.html' %} {% block title %} Home {% endblock %} {% block hi %}
-<h1>Top Posts</h1>
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block hi %}
+<div class="d-md-flex justify-content-between">
+  <h1>Top Posts</h1>
+  <form 
+    action="/"
+    method="get" 
+    class="form-inline my-2 my-lg-0">
+    <input
+      class="form-control mr-sm-2"
+      type="search"
+      name="search"
+      placeholder="Search"
+      aria-label="Search"
+      value="{{ search_q }}"
+    />
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</div>
 <hr />
 <section>
   <div class="card-columns">
-    {% for post in posts%}
+    {% for post in posts %}
     <div class="card">
       <a href="{% url "posts:post" slug=post.slug %}">
-        <img
-          class="card-img-top"
-          src="{{post.banner.url}}"
-          alt="{{post.title}}"
-        />
+        <img class="card-img-top" src="{{ post.banner.url }}" alt="{{ post.title }}" />
       </a>
       <div class="card-body">
-        <h5 class="card-title">{{post.title}}</h5>
-        <p class="card-text truncate-multiline">{{post.body}}</p>
+        <h5 class="card-title">{{ post.title }}</h5>
+        <p class="card-text truncate-multiline">{{ post.body }}</p>
         <div class="card-footer">
-          <small class="text-muted">{{post.date}}</small>
+          <small class="text-muted">{{ post.date }}</small>
         </div>
       </div>
     </div>
-
     {% endfor %}
+  </div>
+
+  {% if not posts %}
+    <p>No posts found.</p>
+  {% endif %}
+
+  <div>
+    <!-- Pagination controls -->
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?search={{ search_q }}&page=1" aria-label="First">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?search={{ search_q }}&page={{ page_obj.previous_page_number }}" aria-label="Previous">
+          <span aria-hidden="true">&lsaquo;</span>
+        </a>
+      </li>
+      {% endif %}
+
+      <li class="page-item disabled">
+        <a class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
+      </li>
+
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?search={{ search_q }}&page={{ page_obj.next_page_number }}" aria-label="Next">
+          <span aria-hidden="true">&rsaquo;</span>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?search={{ search_q }}&page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
   </div>
 </section>
 {% endblock %}
